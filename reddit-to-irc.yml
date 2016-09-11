@@ -1,0 +1,12 @@
+---
+- name: Install reddit to irc transport
+  hosts: glportal
+  tasks:
+  - name: Create directory for irc transport
+    file: path={{ansible_env.HOME}}/system/docker/reddit-bot recurse=yes
+  - name: Checkout transport bot
+    git: repo=https://github.com/GlPortal/reddit-bot.git dest={{ansible_env.HOME}}/system/docker/reddit-bot
+  - name: Run transport bot
+    shell: docker-compose up
+    args:
+      chdir: {{ansible_env.HOME}}/system/docker/reddit-bot
